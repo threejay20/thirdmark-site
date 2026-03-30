@@ -235,6 +235,16 @@
       .hero { padding-top: 80px; }
     }
 
+    /* Hero logo */
+    .hero-logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .hero-logo img {
+      filter: drop-shadow(0 0 24px rgba(99,102,241,0.35));
+    }
+
     /* Badge */
     .badge {
       display: inline-flex;
@@ -711,6 +721,87 @@
     .btn-service--outlined:hover {
       border-color: var(--accent);
       box-shadow: 0 0 16px rgba(99,102,241,0.15);
+    }
+
+    /* ─── Capabilities ─── */
+    .section-intro {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 12px 0 0 0;
+      line-height: 1.65;
+    }
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+    }
+    @media (max-width: 900px) {
+      .cap-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .cap-grid { grid-template-columns: 1fr; }
+    }
+    .cap-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .cap-card:hover {
+      border-color: var(--border-bright);
+      box-shadow: 0 0 30px rgba(99,102,241,0.1);
+    }
+    .cap-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(99,102,241,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .cap-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .cap-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .cap-list li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .cap-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+      top: 1px;
+    }
+    .cap-footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .cap-footer strong {
+      color: var(--text-dim);
     }
 
     /* ─── Social Proof ─── */
@@ -1294,6 +1385,10 @@
 
   <!-- Hero -->
   <section class="hero">
+    <div class="hero-logo">
+      <img src="logo.png" alt="Thirdmark" height="200" width="182" />
+    </div>
+
     <div class="badge">
       <span class="badge-dot"></span>
       Available for new projects
@@ -1506,7 +1601,7 @@
         <!-- AI Studio -->
         <div class="service-card">
           <div class="service-tier">AI Studio</div>
-          <div class="service-price">$15,000 to $50,000 per month</div>
+          <div class="service-price">$15,000 to $35,000 per month</div>
           <span class="service-engagement">Full-service engagement</span>
           <p class="service-desc">The entire delivery stack operates as your outsourced team. For funded companies that need agency-level output across multiple functions, without the agency structure or overhead.</p>
           <ul class="service-bullets">
@@ -1519,6 +1614,137 @@
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- Capabilities -->
+  <section>
+    <div class="container">
+      <p class="section-label">Capabilities</p>
+      <h2 class="section-headline">156 agents. Every function.</h2>
+      <p class="section-intro">From the first product spec to the last deployment — here is what Thirdmark can actually build.</p>
+
+      <div class="cap-grid">
+
+        <!-- Product & Strategy -->
+        <div class="cap-card">
+          <div class="cap-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <rect x="2" y="2" width="7" height="7" rx="1.5" fill="#818cf8"/>
+              <rect x="11" y="2" width="7" height="7" rx="1.5" fill="#818cf8" opacity="0.5"/>
+              <rect x="2" y="11" width="7" height="7" rx="1.5" fill="#818cf8" opacity="0.5"/>
+              <rect x="11" y="11" width="7" height="7" rx="1.5" fill="#818cf8" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="cap-name">Product &amp; Strategy</div>
+          <ul class="cap-list">
+            <li>90-day or annual product roadmap</li>
+            <li>Go-to-market plan with launch sequencing</li>
+            <li>Competitive analysis and positioning report</li>
+            <li>Feature specs and user stories</li>
+            <li>Market research and opportunity sizing</li>
+          </ul>
+        </div>
+
+        <!-- Engineering & Architecture -->
+        <div class="cap-card">
+          <div class="cap-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <polyline points="6,8 2,10 6,12" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="14,8 18,10 14,12" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="12" y1="4" x2="8" y2="16" stroke="#818cf8" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="cap-name">Engineering &amp; Architecture</div>
+          <ul class="cap-list">
+            <li>Backend API design and implementation</li>
+            <li>Frontend build (React, Vue, vanilla)</li>
+            <li>Code review and technical debt assessment</li>
+            <li>Security audit and hardening plan</li>
+            <li>DevOps pipeline and infrastructure setup</li>
+          </ul>
+        </div>
+
+        <!-- Marketing & Search -->
+        <div class="cap-card">
+          <div class="cap-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="9" cy="9" r="6" stroke="#818cf8" stroke-width="2" fill="none"/>
+              <line x1="13.5" y1="13.5" x2="18" y2="18" stroke="#818cf8" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+            </svg>
+          </div>
+          <div class="cap-name">Marketing &amp; Search</div>
+          <ul class="cap-list">
+            <li>SEO (search strategy) and keyword research</li>
+            <li>30 or 90-day content calendar</li>
+            <li>Website and landing page copy</li>
+            <li>Email and newsletter sequences</li>
+            <li>Social media playbook and post templates</li>
+          </ul>
+        </div>
+
+        <!-- Design & Brand -->
+        <div class="cap-card">
+          <div class="cap-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="10" cy="10" r="3" fill="#818cf8"/>
+              <circle cx="10" cy="10" r="7" stroke="#818cf8" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <circle cx="10" cy="3" r="1.5" fill="#818cf8" opacity="0.5"/>
+              <circle cx="10" cy="17" r="1.5" fill="#818cf8" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="cap-name">Design &amp; Brand</div>
+          <ul class="cap-list">
+            <li>Brand identity (logo, palette, typography)</li>
+            <li>Landing page and website design</li>
+            <li>UI component library and design system</li>
+            <li>UX audit and wireframe recommendations</li>
+            <li>Pitch deck and presentation design</li>
+          </ul>
+        </div>
+
+        <!-- Sales & Revenue -->
+        <div class="cap-card">
+          <div class="cap-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M3 17 L10 4 L17 17" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="5.5" y1="12" x2="14.5" y2="12" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="cap-name">Sales &amp; Revenue</div>
+          <ul class="cap-list">
+            <li>Cold outreach sequences (email and LinkedIn)</li>
+            <li>Proposal and pitch deck writing</li>
+            <li>Competitive battlecards</li>
+            <li>Sales playbook and discovery framework</li>
+            <li>Pipeline health analysis and deal strategy</li>
+          </ul>
+        </div>
+
+        <!-- Data & Reporting -->
+        <div class="cap-card">
+          <div class="cap-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <rect x="3" y="12" width="3" height="6" rx="1" fill="#818cf8" opacity="0.4"/>
+              <rect x="8.5" y="8" width="3" height="10" rx="1" fill="#818cf8" opacity="0.65"/>
+              <rect x="14" y="4" width="3" height="14" rx="1" fill="#818cf8"/>
+            </svg>
+          </div>
+          <div class="cap-name">Data &amp; Reporting</div>
+          <ul class="cap-list">
+            <li>KPI dashboard design and setup</li>
+            <li>Analytics audit and tracking implementation</li>
+            <li>Pipeline and revenue analysis</li>
+            <li>Financial model and projections</li>
+            <li>Performance benchmarking report</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <p class="cap-footer">Not seeing what you need? <strong>If a company does it, Thirdmark can build it.</strong></p>
     </div>
   </section>
 
@@ -1791,7 +2017,7 @@
               <option value="" disabled selected>Select a tier</option>
               <option>AI Sprint ($1,500 to $5,000)</option>
               <option>AI Retainer ($5,000 to $15,000/mo)</option>
-              <option>AI Studio ($15,000 to $50,000/mo)</option>
+              <option>AI Studio ($15,000 to $35,000/mo)</option>
               <option>Not sure yet</option>
             </select>
           </div>
