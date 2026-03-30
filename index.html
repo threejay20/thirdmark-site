@@ -852,13 +852,7 @@
       padding: 36px;
     }
     .proof-grid {
-      display: grid;
-      grid-template-columns: 60fr 40fr;
-      gap: 40px;
-      align-items: center;
-    }
-    @media (max-width: 767px) {
-      .proof-grid { grid-template-columns: 1fr; }
+      display: block;
     }
     .proof-left h3 {
       font-size: 20px;
@@ -906,61 +900,6 @@
       color: var(--text-2);
       line-height: 1.7;
     }
-    .proof-right {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-    .proof-ring-label {
-      font-size: 13px;
-      color: var(--text-2);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .proof-divider {
-      width: 80px;
-      height: 1px;
-      background: var(--border);
-    }
-    .proof-speed-num {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--accent-2);
-      line-height: 1;
-    }
-    .proof-speed-label {
-      font-size: 13px;
-      color: var(--text-2);
-      margin-top: 4px;
-      text-align: center;
-    }
-
-    /* SVG ring */
-    .ring-wrap {
-      position: relative;
-      width: 120px;
-      height: 120px;
-    }
-    .ring-center {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .ring-score {
-      font-size: 36px;
-      font-weight: 900;
-      color: var(--accent-2);
-      line-height: 1;
-    }
-    .ring-score-denom {
-      font-size: 14px;
-      color: var(--text-3);
-    }
-
     /* ─── Who This Is For ─── */
     .fit-grid {
       display: grid;
@@ -1774,37 +1713,7 @@
               <li>A <span class="proof-metric">30-day content calendar</span> with 12 blog posts, 12 LinkedIn posts, 4 email newsletters, and 2 short-form explainers. Every title written, keyword-mapped, and distribution-planned.</li>
               <li>Six LinkedIn thought leadership angles with full briefs, hooks, core arguments, and format guidance</li>
             </ul>
-            <p class="proof-closing">Delivered in under <strong>48 hours</strong>. Quality score: <strong>95/100</strong>.</p>
-          </div>
-
-          <div class="proof-right">
-            <div class="ring-wrap">
-              <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="QA Score 95 out of 100">
-                <!-- Track -->
-                <circle cx="60" cy="60" r="54" stroke="#2d2d45" stroke-width="8" fill="none" />
-                <!-- Progress: circumference = 2*pi*54 = 339.29, 95% = 322.33 -->
-                <circle
-                  cx="60" cy="60" r="54"
-                  stroke="#818cf8"
-                  stroke-width="8"
-                  fill="none"
-                  stroke-dasharray="322.33 339.29"
-                  stroke-dashoffset="0"
-                  stroke-linecap="round"
-                  transform="rotate(-90 60 60)"
-                />
-              </svg>
-              <div class="ring-center">
-                <span class="ring-score">95</span>
-                <span class="ring-score-denom">/100</span>
-              </div>
-            </div>
-            <span class="proof-ring-label">Quality Score</span>
-            <div class="proof-divider"></div>
-            <div style="text-align: center;">
-              <div class="proof-speed-num">48hrs</div>
-              <div class="proof-speed-label">Delivery time</div>
-            </div>
+            <p class="proof-closing">Delivered in under <strong>48 hours</strong>.</p>
           </div>
         </div></div>
       </div>
@@ -1927,7 +1836,7 @@
         </details>
         <details>
           <summary>I've seen AI-assisted work before and it wasn't good. Why would this be different?</summary>
-          <p class="faq-answer">Most AI-assisted work fails at the judgment layer: knowing what to make, for whom, at what level of precision, and whether it's actually right. The delivery system here handles volume and speed. The judgment layer handles scope, strategy, quality review, and the standards that determine whether something ships. The CloudHarbor engagement scored 95/100 on a structured quality review before delivery. That score is the bar, not the ceiling.</p>
+          <p class="faq-answer">Most AI-assisted work fails at the judgment layer: knowing what to make, for whom, at what level of precision, and whether it's actually right. The delivery system here handles volume and speed. The judgment layer handles scope, strategy, quality review, and the standards that determine whether something ships. Every CloudHarbor deliverable went through a structured review before it shipped. That standard applies to every engagement.</p>
         </details>
       </div>
     </div>
