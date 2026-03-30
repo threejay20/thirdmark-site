@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thirdmark — Senior-Level Execution Without the Overhead</title>
+  <meta name="description" content="Thirdmark delivers senior-level strategy, content, engineering, and sales execution in days — without the overhead of a traditional agency or the coordination cost of freelancers." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Tokens ─── */
+    :root {
+      --bg: #060608;
+      --surface: #0d0d12;
+      --surface-2: #13131a;
+      --border: #1e1e2e;
+      --border-bright: #2d2d45;
+      --text: #f1f1f3;
+      --text-2: #8b8ba8;
+      --text-3: #4a4a65;
+      --accent: #6366f1;
+      --accent-1: #6366f1;
+      --accent-2: #818cf8;
+      --accent-3: #c084fc;
+      --text-1: #f1f1f3;
+      --accent-glow: rgba(99,102,241,0.18);
+      --green: #22c55e;
+      --red: #ef4444;
+      --orange: #f97316;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      color: var(--text);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ─── Background orbs ─── */
+    .orb {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 50%;
+    }
+    .orb-1 {
+      top: -20%;
+      left: -10%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%);
+      filter: blur(80px);
+    }
+    .orb-2 {
+      top: 10%;
+      right: -15%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(192,132,252,0.2) 0%, transparent 70%);
+      filter: blur(80px);
+    }
+    .orb-3 {
+      bottom: 0;
+      left: 30%;
+      width: 800px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+      filter: blur(100px);
+    }
+
+    /* ─── Stars ─── */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+    }
+    @keyframes star-drift {
+      0%   { transform: translateY(0); opacity: var(--star-op); }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    /* ─── Content z-index layer ─── */
+    nav, section, footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── Layout ─── */
+    .container {
+      width: 100%;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    .container--wide {
+      max-width: 1000px;
+    }
+
+    section {
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
+
+    /* ─── Section labels ─── */
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    /* ─── Dividers ─── */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-bright), transparent);
+      border: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── Animations ─── */
+    @keyframes pulse-scale {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.4); }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ─── Navigation ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: all 200ms ease;
+    }
+    nav.scrolled {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(6,6,8,0.75);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+    }
+    .nav-brand-wordmark {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .nav-cta {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      padding: 7px 16px;
+      border: 1px solid var(--border-bright);
+      border-radius: 7px;
+      transition: border-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
+    }
+    .nav-cta:hover {
+      border-color: var(--accent);
+      color: var(--accent-2);
+      box-shadow: 0 0 16px rgba(99,102,241,0.2);
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 120px;
+      padding-bottom: 80px;
+    }
+    @media (max-width: 767px) {
+      .hero { padding-top: 80px; }
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(99,102,241,0.3);
+      background: rgba(99,102,241,0.08);
+      border-radius: 9999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--accent-2);
+      margin-bottom: 32px;
+    }
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse-scale 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    /* Headline */
+    .hero-headline {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      max-width: 700px;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    @media (max-width: 767px) {
+      .hero-headline { font-size: 44px; }
+    }
+    .gradient-word {
+      background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Subheadline */
+    .hero-sub {
+      font-size: 19px;
+      color: var(--text-2);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    /* Hero CTA */
+    .btn-primary {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 36px;
+      border-radius: 8px;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: background 200ms ease, box-shadow 200ms ease;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%);
+      background-size: 200% 100%;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    .btn-primary:hover {
+      background: var(--accent-2);
+      box-shadow: 0 0 32px rgba(99,102,241,0.5);
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-top: 48px;
+      margin-bottom: 0;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 32px;
+    }
+    .stat-item + .stat-item {
+      border-left: 1px solid var(--border);
+    }
+    .stat-number {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--accent-2);
+      line-height: 1.2;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+
+    /* Hero card wrapper */
+    .hero-card-wrap {
+      margin-top: 56px;
+      width: 100%;
+      max-width: 740px;
+      position: relative;
+    }
+    .hero-card-glow-line {
+      display: block;
+      margin: 0 auto 0 auto;
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      margin-bottom: -1px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border-bright);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(99,102,241,0.2), 0 32px 80px rgba(0,0,0,0.6), 0 0 60px rgba(99,102,241,0.1);
+      animation: float 6s ease-in-out infinite;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+    }
+    .card-header-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+    .card-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .card-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .card-dot--red { background: var(--red); }
+    .card-dot--yellow { background: var(--orange); }
+    .card-dot--green { background: var(--green); }
+
+
+    .card-footer {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      padding: 12px 20px;
+      background: var(--surface-2);
+      border-top: 1px solid var(--border);
+    }
+    .card-footer-item {
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    /* ─── Sprint Card ─── */
+    .sprint-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sprint-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .sprint-status {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #34d399;
+      background: rgba(52,211,153,0.1);
+      border: 1px solid rgba(52,211,153,0.25);
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+    .sprint-items {
+      padding: 12px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .sprint-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .sprint-item--done { color: var(--text-2); }
+    .sprint-item--active { color: var(--text-1); font-weight: 600; }
+    .sprint-item--pending { color: var(--text-3); }
+    .sprint-check {
+      font-size: 12px;
+      width: 18px;
+      text-align: center;
+      color: #34d399;
+      flex-shrink: 0;
+    }
+    .sprint-check--active { color: var(--accent-1); }
+    .sprint-check--pending { color: var(--text-3); }
+
+    /* ─── Problem / Comparison ─── */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 767px) {
+      .comparison-grid { grid-template-columns: 1fr; }
+    }
+    .comp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .comp-card--featured {
+      background: rgba(99,102,241,0.05);
+      border: 1px solid var(--accent);
+      position: relative;
+    }
+    .comp-card-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .comp-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .comp-card-sub {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+    .comp-card-tag {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-2);
+      background: rgba(99,102,241,0.15);
+      border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 20px;
+      padding: 3px 9px;
+    }
+    .comp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-2);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .comp-item-icon {
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-style: normal;
+    }
+    .problem-body {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-top: 8px;
+    }
+
+    /* ─── How It Works — Timeline ─── */
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 21px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+    .timeline-step {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 32px;
+      position: relative;
+    }
+    .timeline-step:last-child { margin-bottom: 0; }
+    .step-num {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: var(--accent-glow);
+      color: var(--accent-2);
+      font-size: 16px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(99,102,241,0.4);
+      margin-left: -10px;
+    }
+    .step-card {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+    .step-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .step-card p {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+
+    /* ─── Services ─── */
+    .services-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      position: relative;
+      transition: border-color 250ms ease, box-shadow 250ms ease;
+      overflow: hidden;
+    }
+    .service-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 40px rgba(99,102,241,0.15);
+    }
+    .service-card--featured {
+      border-color: var(--border-bright);
+      box-shadow: 0 0 40px rgba(99,102,241,0.12);
+    }
+    .service-card--featured::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--accent), var(--accent-3));
+    }
+    .service-popular-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 4px 10px;
+    }
+    .service-tier {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .service-price {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--accent-2);
+      margin-bottom: 6px;
+    }
+    .service-engagement {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--text-3);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 10px;
+      margin-bottom: 16px;
+    }
+    .service-desc {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    .service-bullets {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+    .service-bullets li {
+      font-size: 14px;
+      color: var(--text-2);
+      padding: 4px 0;
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .service-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 8px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+    .service-examples {
+      font-size: 13px;
+      color: var(--text-3);
+      font-style: italic;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .btn-service {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 200ms ease, box-shadow 200ms ease, color 200ms ease, border-color 200ms ease;
+    }
+    .btn-service--filled {
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid transparent;
+    }
+    .btn-service--filled:hover {
+      background: var(--accent-2);
+      box-shadow: 0 0 24px rgba(99,102,241,0.4);
+    }
+    .btn-service--outlined {
+      background: transparent;
+      color: var(--accent-2);
+      border: 1px solid var(--border-bright);
+    }
+    .btn-service--outlined:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 16px rgba(99,102,241,0.15);
+    }
+
+    /* ─── Social Proof ─── */
+    .proof-card {
+      background: var(--surface);
+      border: 1px solid var(--border-bright);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .proof-client-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 36px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(99,102,241,0.06);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .proof-client-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .proof-client-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+    .proof-client-tag {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+    .proof-client-badge {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-2);
+      background: rgba(99,102,241,0.12);
+      border: 1px solid rgba(99,102,241,0.25);
+      border-radius: 20px;
+      padding: 4px 12px;
+      white-space: nowrap;
+    }
+    .proof-card-body {
+      padding: 36px;
+    }
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 60fr 40fr;
+      gap: 40px;
+      align-items: center;
+    }
+    @media (max-width: 767px) {
+      .proof-grid { grid-template-columns: 1fr; }
+    }
+    .proof-left h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .proof-left p {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .proof-bullets {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+    .proof-bullets li {
+      font-size: 14px;
+      color: var(--text-2);
+      padding: 6px 0;
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.6;
+      border-bottom: 1px solid var(--border);
+    }
+    .proof-bullets li:first-child { border-top: 1px solid var(--border); }
+    .proof-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .proof-metric {
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+    .proof-closing {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+    .proof-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .proof-ring-label {
+      font-size: 13px;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .proof-divider {
+      width: 80px;
+      height: 1px;
+      background: var(--border);
+    }
+    .proof-speed-num {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent-2);
+      line-height: 1;
+    }
+    .proof-speed-label {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    /* SVG ring */
+    .ring-wrap {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+    .ring-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .ring-score {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--accent-2);
+      line-height: 1;
+    }
+    .ring-score-denom {
+      font-size: 14px;
+      color: var(--text-3);
+    }
+
+    /* ─── Who This Is For ─── */
+    .fit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 767px) {
+      .fit-grid { grid-template-columns: 1fr; }
+    }
+    .fit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+    }
+    .fit-sub-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+    .fit-sub-label--good { color: var(--accent); }
+    .fit-sub-label--bad  { color: var(--text-2); }
+    .fit-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .fit-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .fit-icon {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .not-fit-body {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+    }
+    details {
+      border-bottom: 1px solid var(--border);
+    }
+    details[open] {
+      background: var(--surface);
+      border-radius: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 20px 0;
+      padding-right: 32px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      position: relative;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '';
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%238b8ba8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      transition: transform 200ms ease;
+    }
+    details[open] summary::after {
+      transform: translateY(-50%) rotate(180deg);
+    }
+    details[open] summary {
+      padding-left: 16px;
+      padding-right: 48px;
+      padding-top: 20px;
+    }
+    .faq-answer {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.75;
+      padding: 0 16px 20px 16px;
+    }
+
+    /* ─── Closing CTA ─── */
+    .closing-cta {
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(99,102,241,0.2) 0%, transparent 70%), var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 120px 0;
+      text-align: center;
+    }
+    @media (max-width: 767px) {
+      .closing-cta { padding: 72px 0; }
+    }
+    .cta-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .cta-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-2);
+      margin-bottom: 16px;
+    }
+    .cta-headline {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+      margin-bottom: 20px;
+    }
+    @media (max-width: 767px) {
+      .cta-headline { font-size: 28px; }
+    }
+    .cta-body {
+      font-size: 18px;
+      color: var(--text-2);
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+    .cta-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    /* ─── Contact Form ─── */
+    .contact-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .contact-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-2);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .contact-headline {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 767px) {
+      .contact-headline { font-size: 26px; }
+    }
+    .contact-sub {
+      font-size: 17px;
+      color: var(--text-2);
+      line-height: 1.7;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: 0.02em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 15px;
+      color: var(--text-1);
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236366f1' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+    .form-group select option {
+      background-color: #1a1a2e;
+      color: #e2e8f0;
+    }
+    .form-group select option:disabled {
+      color: #6b7280;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--text-3);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent-1);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+    .form-submit {
+      margin-top: 8px;
+    }
+    .form-submit .btn-primary {
+      width: 100%;
+      justify-content: center;
+      display: flex;
+      cursor: pointer;
+      border: none;
+      font-size: 16px;
+      font-family: inherit;
+    }
+    .form-note {
+      font-size: 13px;
+      color: var(--text-3);
+      text-align: center;
+      margin-top: 12px;
+    }
+    .form-success {
+      display: none;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 14px;
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .form-success.visible { display: block; }
+    .form-success-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+    .form-success h3 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 10px;
+    }
+    .form-success p {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    /* ─── Modal ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(6,6,8,0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-panel {
+      background: #0d0d12;
+      border: 1px solid var(--border-bright);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 660px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 40px;
+      position: relative;
+      transform: translateY(24px);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .modal-panel.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    @media (max-width: 600px) {
+      .modal-panel { padding: 28px 20px; }
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--text-2);
+      cursor: pointer;
+      line-height: 1;
+      transition: background 0.2s, color 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.12); color: var(--text-1); }
+    .modal-header { margin-bottom: 32px; }
+    .modal-header .contact-label { text-align: left; }
+    .modal-header .contact-headline { text-align: left; font-size: 28px; margin-bottom: 10px; }
+    .modal-header .contact-sub { text-align: left; font-size: 15px; }
+
+    /* ─── Footer (updated) ─── */
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-privacy {
+      font-size: 12px;
+      color: var(--text-3);
+      max-width: 480px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ─── Reduced Motion ─── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .star { display: none; }
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    /* ─── Section headline defaults ─── */
+    .section-headline {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 767px) {
+      .section-headline { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background layer -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="stars" id="stars"></div>
+
+  <!-- Navigation -->
+  <nav id="main-nav">
+    <div class="nav-inner container--wide">
+      <a href="#" class="nav-brand">
+        <img src="logo.png" alt="Thirdmark" width="47" height="52" style="display:block;" />
+      </a>
+      <a href="#" onclick="openContactModal();return false;" class="nav-cta">Get in Touch</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Available for new projects
+    </div>
+
+    <h1 class="hero-headline">
+      Senior-Level Execution.<br>Without the <span class="gradient-word">Overhead.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Thirdmark delivers strategy, copy, code, design direction, and sales systems at the pace your roadmap actually requires. Every engagement runs end-to-end without hand-offs, account managers, or process overhead.
+    </p>
+
+    <a href="#" onclick="openContactModal();return false;" class="btn-primary">
+      Start a Conversation
+    </a>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-number">156</span>
+        <span class="stat-label">Specialized agents</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">End-to-end</span>
+        <span class="stat-label">Every engagement</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">13</span>
+        <span class="stat-label">Delivery divisions</span>
+      </div>
+    </div>
+
+    <!-- Floating sprint scope card -->
+    <div class="hero-card-wrap">
+      <span class="hero-card-glow-line"></span>
+      <div class="hero-card">
+        <div class="card-header">
+          <span class="card-header-title">⚡ Active Sprint</span>
+          <div class="card-dots">
+            <span class="card-dot card-dot--red"></span>
+            <span class="card-dot card-dot--yellow"></span>
+            <span class="card-dot card-dot--green"></span>
+          </div>
+        </div>
+        <div class="sprint-meta">
+          <span class="sprint-label">Launch Sprint</span>
+          <span class="sprint-status">In delivery</span>
+        </div>
+        <div class="sprint-items">
+          <div class="sprint-item sprint-item--done">
+            <span class="sprint-check">✓</span>
+            <span>Ideal customer definition and positioning framework</span>
+          </div>
+          <div class="sprint-item sprint-item--done">
+            <span class="sprint-check">✓</span>
+            <span>Homepage messaging and hero copy</span>
+          </div>
+          <div class="sprint-item sprint-item--done">
+            <span class="sprint-check">✓</span>
+            <span>3-touch outbound email sequence</span>
+          </div>
+          <div class="sprint-item sprint-item--active">
+            <span class="sprint-check sprint-check--active">→</span>
+            <span>Sales deck — slide 4 of 6</span>
+          </div>
+          <div class="sprint-item sprint-item--pending">
+            <span class="sprint-check sprint-check--pending">○</span>
+            <span>Quality review and final delivery</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-footer-item">⏱ Day 2 of 5</span>
+          <span class="card-footer-item">✅ Quality check on delivery</span>
+          <span class="card-footer-item">📦 4 deliverables</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- Problem -->
+  <section>
+    <div class="container">
+      <p class="section-label">The Problem</p>
+      <h2 class="section-headline">Why the Usual Options Fail</h2>
+
+      <div class="comparison-grid">
+        <!-- Traditional Agency -->
+        <div class="comp-card">
+          <div class="comp-card-icon">🏢</div>
+          <div class="comp-card-title">Traditional Agency</div>
+          <div class="comp-card-sub">Big retainer, slow start</div>
+          <div class="comp-item"><span class="comp-item-icon">❌</span> 6 weeks to start</div>
+          <div class="comp-item"><span class="comp-item-icon">❌</span> Junior team on your account</div>
+          <div class="comp-item"><span class="comp-item-icon">❌</span> Charges regardless of output</div>
+          <div class="comp-item"><span class="comp-item-icon">❌</span> You manage the relationship</div>
+        </div>
+
+        <!-- Freelancers -->
+        <div class="comp-card">
+          <div class="comp-card-icon">👤</div>
+          <div class="comp-card-title">Freelancers</div>
+          <div class="comp-card-sub">One skill, you coordinate</div>
+          <div class="comp-item"><span class="comp-item-icon">⚠️</span> One function at a time</div>
+          <div class="comp-item"><span class="comp-item-icon">⚠️</span> You become the project manager</div>
+          <div class="comp-item"><span class="comp-item-icon">⚠️</span> Quality varies wildly</div>
+          <div class="comp-item"><span class="comp-item-icon">⚠️</span> No strategic layer</div>
+        </div>
+
+        <!-- This -->
+        <div class="comp-card comp-card--featured">
+          <span class="comp-card-tag">How it works here</span>
+          <div class="comp-card-icon">⚡</div>
+          <div class="comp-card-title">This Engagement Model</div>
+          <div class="comp-card-sub">Senior output, fast</div>
+          <div class="comp-item"><span class="comp-item-icon">✅</span> 3 to 7 business day turnaround</div>
+          <div class="comp-item"><span class="comp-item-icon">✅</span> Senior ownership across strategy + delivery</div>
+          <div class="comp-item"><span class="comp-item-icon">✅</span> Quality-reviewed before you see it</div>
+          <div class="comp-item"><span class="comp-item-icon">✅</span> No account manager layer</div>
+        </div>
+      </div>
+
+      <p class="problem-body">You need senior execution across four or five functions at once, but you're not far enough along to justify full-time hires in each one. A traditional agency charges for coordination theater and takes six weeks to start. A freelancer does one thing well. You need all of it, scoped properly, and delivered in days, not quarters. That gap is where most fast-moving companies lose time they can't get back.</p>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- How It Works -->
+  <section>
+    <div class="container">
+      <p class="section-label">Process</p>
+      <h2 class="section-headline">Four Steps. One Deliverable.</h2>
+
+      <div class="timeline">
+        <div class="timeline-step">
+          <div class="step-num">1</div>
+          <div class="step-card">
+            <h3>Scope the work together</h3>
+            <p>I handle intake directly. You describe what you need, the timeline, and the constraints. If the engagement is not a clear fit, I'll say so.</p>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-num">2</div>
+          <div class="step-card">
+            <h3>I run the execution</h3>
+            <p>Depending on the scope, work spans one or multiple functions: product strategy, engineering, content, sales systems, design direction. Everything is coordinated and quality-checked before you see it.</p>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-num">3</div>
+          <div class="step-card">
+            <h3>Delivery and review</h3>
+            <p>You receive a complete, polished deliverable. Not a draft, not a deck of options. If something needs revision, it gets revised. The work is yours in full.</p>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-num">4</div>
+          <div class="step-card">
+            <h3>Continue or conclude</h3>
+            <p>Sprint engagements end cleanly. Retainer clients scope the next cycle at the top of each month. No lock-in, no surprise scope creep.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- Services -->
+  <section>
+    <div class="container">
+      <p class="section-label">Services</p>
+      <h2 class="section-headline">Three Ways to Engage</h2>
+
+      <div class="services-stack">
+
+        <!-- AI Sprint -->
+        <div class="service-card service-card--featured">
+          <span class="service-popular-badge">Most Popular</span>
+          <div class="service-tier">AI Sprint</div>
+          <div class="service-price">$1,500 to $5,000</div>
+          <span class="service-engagement">One-time engagement</span>
+          <p class="service-desc">A single deliverable, scoped tightly and turned around in 3 to 7 days. Best for founders and operators who have a specific problem and need it solved now.</p>
+          <ul class="service-bullets">
+            <li>Defined scope with one clear output</li>
+            <li>Turnaround in 3 to 7 business days</li>
+            <li>Full ownership of all deliverables transferred on completion</li>
+          </ul>
+          <p class="service-examples">Examples: product roadmap, launch strategy, landing page and messaging, security audit, search and content strategy, competitive analysis.</p>
+          <a href="#" onclick="openContactModal();return false;" class="btn-service btn-service--filled">Get Started</a>
+        </div>
+
+        <!-- AI Retainer -->
+        <div class="service-card">
+          <div class="service-tier">AI Retainer</div>
+          <div class="service-price">$5,000 to $15,000 per month</div>
+          <span class="service-engagement">Ongoing engagement</span>
+          <p class="service-desc">Consistent output across one or more functions each month. Scope is set at the start of each cycle, so you always know what's being built and when.</p>
+          <ul class="service-bullets">
+            <li>Monthly scope agreement with clear deliverables</li>
+            <li>Covers one or more functions concurrently</li>
+            <li>Flexible across product, engineering, content, sales, or design</li>
+          </ul>
+          <p class="service-examples">Examples: monthly product sprints, ongoing content and search execution, continuous engineering support, full sales system buildout.</p>
+          <a href="#" onclick="openContactModal();return false;" class="btn-service btn-service--outlined">Get in Touch</a>
+        </div>
+
+        <!-- AI Studio -->
+        <div class="service-card">
+          <div class="service-tier">AI Studio</div>
+          <div class="service-price">$15,000 to $50,000 per month</div>
+          <span class="service-engagement">Full-service engagement</span>
+          <p class="service-desc">The entire delivery stack operates as your outsourced team. For funded companies that need agency-level output across multiple functions, without the agency structure or overhead.</p>
+          <ul class="service-bullets">
+            <li>Full-stack delivery across all relevant functions</li>
+            <li>Operates as an embedded team, not a vendor</li>
+            <li>Suitable for seed through Series A companies building in parallel</li>
+          </ul>
+          <p class="service-examples">Examples: full product buildout, complete launch execution, end-to-end technical delivery from architecture through launch.</p>
+          <a href="#" onclick="openContactModal();return false;" class="btn-service btn-service--outlined">Get in Touch</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- Social Proof -->
+  <section>
+    <div class="container">
+      <p class="section-label">Recent Work</p>
+      <h2 class="section-headline">What a Full Engagement Looks Like</h2>
+
+      <div class="proof-card">
+        <div class="proof-client-header">
+          <div class="proof-client-meta">
+            <span class="proof-client-name">CloudHarbor</span>
+            <span class="proof-client-tag">Cloud cost management / Seed stage / Software company</span>
+          </div>
+          <span class="proof-client-badge">Sample Engagement</span>
+        </div>
+        <div class="proof-card-body"><div class="proof-grid">
+          <div class="proof-left">
+            <h3>Complete marketing foundation, delivered in 48 hours</h3>
+            <p>CloudHarbor needed a full marketing foundation built from scratch before their next funding round: a SEO (search strategy), homepage positioning, a full month of content, and a LinkedIn direction for their founding team. No prior marketing infrastructure existed.</p>
+            <ul class="proof-bullets">
+              <li>A keyword strategy covering <span class="proof-metric">18 priority terms</span> across four intent tiers, with a <span class="proof-metric">90-day content roadmap</span> and internal linking architecture</li>
+              <li>Three homepage headline options with a messaging framework targeting both technical and finance decision-makers, including split-test recommendations and button copy strategy</li>
+              <li>A <span class="proof-metric">30-day content calendar</span> with 12 blog posts, 12 LinkedIn posts, 4 email newsletters, and 2 short-form explainers. Every title written, keyword-mapped, and distribution-planned.</li>
+              <li>Six LinkedIn thought leadership angles with full briefs, hooks, core arguments, and format guidance</li>
+            </ul>
+            <p class="proof-closing">Delivered in under <strong>48 hours</strong>. Quality score: <strong>95/100</strong>.</p>
+          </div>
+
+          <div class="proof-right">
+            <div class="ring-wrap">
+              <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="QA Score 95 out of 100">
+                <!-- Track -->
+                <circle cx="60" cy="60" r="54" stroke="#2d2d45" stroke-width="8" fill="none" />
+                <!-- Progress: circumference = 2*pi*54 = 339.29, 95% = 322.33 -->
+                <circle
+                  cx="60" cy="60" r="54"
+                  stroke="#818cf8"
+                  stroke-width="8"
+                  fill="none"
+                  stroke-dasharray="322.33 339.29"
+                  stroke-dashoffset="0"
+                  stroke-linecap="round"
+                  transform="rotate(-90 60 60)"
+                />
+              </svg>
+              <div class="ring-center">
+                <span class="ring-score">95</span>
+                <span class="ring-score-denom">/100</span>
+              </div>
+            </div>
+            <span class="proof-ring-label">Quality Score</span>
+            <div class="proof-divider"></div>
+            <div style="text-align: center;">
+              <div class="proof-speed-num">48hrs</div>
+              <div class="proof-speed-label">Delivery time</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- Who This Is For -->
+  <section>
+    <div class="container">
+      <p class="section-label">Fit</p>
+      <h2 class="section-headline">Who This Is For</h2>
+
+      <div class="fit-grid">
+        <!-- Good fit -->
+        <div class="fit-card">
+          <div class="fit-sub-label fit-sub-label--good">Good fit</div>
+          <ul class="fit-list">
+            <li>
+              <svg class="fit-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" fill="rgba(99,102,241,0.18)" stroke="#6366f1" stroke-width="1.5"/>
+                <path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Your business is past the idea stage but you haven't built a full in-house team yet. You need real work moving across more than one area at the same time, without the cost of hiring for each one</span>
+            </li>
+            <li>
+              <svg class="fit-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" fill="rgba(99,102,241,0.18)" stroke="#6366f1" stroke-width="1.5"/>
+                <path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>You've worked with traditional agencies before and spent most of your time managing the relationship rather than receiving the output</span>
+            </li>
+            <li>
+              <svg class="fit-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" fill="rgba(99,102,241,0.18)" stroke="#6366f1" stroke-width="1.5"/>
+                <path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>You have a specific problem with a clear deadline and you need someone who can own it, not hand it off internally</span>
+            </li>
+            <li>
+              <svg class="fit-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" fill="rgba(99,102,241,0.18)" stroke="#6366f1" stroke-width="1.5"/>
+                <path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>You know what good work looks like and you'll recognize it when you see it. You don't need to be sold on quality, you need it demonstrated.</span>
+            </li>
+            <li>
+              <svg class="fit-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" fill="rgba(99,102,241,0.18)" stroke="#6366f1" stroke-width="1.5"/>
+                <path d="M6.5 10.5l2.5 2.5 4.5-5" stroke="#818cf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>You want a single accountable point for everything, not a rotating cast of account managers and subcontractors</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Not a fit -->
+        <div class="fit-card">
+          <div class="fit-sub-label fit-sub-label--bad">Not the right fit</div>
+          <ul class="fit-list">
+            <li>
+              <svg class="fit-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" fill="rgba(74,74,101,0.18)" stroke="#6b6b8a" stroke-width="1.5"/>
+                <path d="M7 7l6 6M13 7l-6 6" stroke="#8b8ba8" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span class="not-fit-body">You need someone available around the clock or on-call for immediate response</span>
+            </li>
+            <li>
+              <svg class="fit-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" fill="rgba(74,74,101,0.18)" stroke="#6b6b8a" stroke-width="1.5"/>
+                <path d="M7 7l6 6M13 7l-6 6" stroke="#8b8ba8" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span class="not-fit-body">You want to direct the process yourself and hand off execution only</span>
+            </li>
+            <li>
+              <svg class="fit-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" fill="rgba(74,74,101,0.18)" stroke="#6b6b8a" stroke-width="1.5"/>
+                <path d="M7 7l6 6M13 7l-6 6" stroke="#8b8ba8" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span class="not-fit-body">You're looking for someone to embed full-time inside your team as a day-to-day staff member</span>
+            </li>
+            <li>
+              <svg class="fit-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" fill="rgba(74,74,101,0.18)" stroke="#6b6b8a" stroke-width="1.5"/>
+                <path d="M7 7l6 6M13 7l-6 6" stroke="#8b8ba8" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <span class="not-fit-body">Your timeline is less than 3 business days</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-headline">Common Questions</h2>
+
+      <div class="faq-list">
+        <details>
+          <summary>The price seems high. What am I actually paying for?</summary>
+          <p class="faq-answer">You're paying for the output, not the inputs. A traditional agency at this price point charges for a team of generalists, account coordination overhead, and process theater. What you get here is a senior-level deliverable, scoped precisely, with one accountable point for quality from start to finish. If the deliverable doesn't meet the standard, it doesn't ship.</p>
+        </details>
+        <details>
+          <summary>How do I know the quality will hold up across functions I've never tested?</summary>
+          <p class="faq-answer">The proof section above covers four distinct deliverable types across a single 48-hour window: keyword research, homepage messaging, a full content calendar, and LinkedIn direction. The standard is consistent because the quality review process is consistent, regardless of the function.</p>
+        </details>
+        <details>
+          <summary>What's the actual turnaround on a Sprint?</summary>
+          <p class="faq-answer">3 to 7 business days for most Sprint engagements. More complex deliverables may run the full 7 days. Timeline is confirmed during scoping, before any work begins.</p>
+        </details>
+        <details>
+          <summary>Who owns the work when it's delivered?</summary>
+          <p class="faq-answer">You do. Full ownership transfers on delivery for all Sprint engagements. Retainer and Studio clients own all work product produced during the engagement. No licensing arrangements, no ongoing dependencies.</p>
+        </details>
+        <details>
+          <summary>I've seen AI-assisted work before and it wasn't good. Why would this be different?</summary>
+          <p class="faq-answer">Most AI-assisted work fails at the judgment layer: knowing what to make, for whom, at what level of precision, and whether it's actually right. The delivery system here handles volume and speed. The judgment layer handles scope, strategy, quality review, and the standards that determine whether something ships. The CloudHarbor engagement scored 95/100 on a structured quality review before delivery. That score is the bar, not the ceiling.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing CTA Bridge -->
+  <section class="closing-cta">
+    <div class="cta-inner">
+      <p class="cta-label">Ready to start?</p>
+      <h2 class="cta-headline">Your roadmap doesn't wait.<br>Neither does Thirdmark.</h2>
+      <p class="cta-body">If your roadmap has more on it than your current team can execute, this is worth a few minutes of your time. Send a brief and get a straight answer on whether it's a fit.</p>
+      <a href="#" onclick="openContactModal();return false;" class="btn-primary">Send a Brief</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-copy">© 2026 Thirdmark. All rights reserved.</p>
+      <p class="footer-privacy">Inquiries sent through this site are used solely to respond to your message. No data is shared or sold.</p>
+    </div>
+  </footer>
+
+  <!-- Contact Modal -->
+  <div class="modal-overlay" id="modal-overlay" aria-modal="true" role="dialog" aria-label="Contact form">
+    <div class="modal-panel" id="modal-panel">
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+
+      <div class="modal-header">
+        <p class="contact-label">Get in touch</p>
+        <h2 class="contact-headline">Tell me what you're working on.</h2>
+        <p class="contact-sub">No pitch deck, no lengthy vetting process. Fill out the brief below and I'll respond within 48 hours.</p>
+      </div>
+
+      <div class="form-success" id="form-success">
+        <div class="form-success-icon">✓</div>
+        <h3>Message received.</h3>
+        <p>I'll review your brief and follow up within 48 hours with whether it's a fit and what the scope would look like.</p>
+      </div>
+
+      <form class="contact-form" id="contact-form" action="https://formsubmit.co/threejay20@live.ca" method="POST">
+        <input type="hidden" name="_subject" value="New Project Inquiry">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="true">
+        <input type="hidden" name="_next" value="https://thirdmark.co/thank-you">
+        <input type="text" name="_honey" style="display:none">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="Alex Chen" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="alex@company.com" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" placeholder="Acme Inc.">
+          </div>
+          <div class="form-group">
+            <label for="stage">Company stage</label>
+            <select id="stage" name="stage">
+              <option value="" disabled selected>Select stage</option>
+              <option>Pre-seed</option>
+              <option>Seed</option>
+              <option>Series A</option>
+              <option>Series B+</option>
+              <option>Bootstrapped</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="goal">What are you trying to accomplish?</label>
+          <textarea id="goal" name="goal" placeholder="Describe the problem, the goal, and any constraints or deadlines." required></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="service">Which tier interests you?</label>
+            <select id="service" name="service">
+              <option value="" disabled selected>Select a tier</option>
+              <option>AI Sprint ($1,500 to $5,000)</option>
+              <option>AI Retainer ($5,000 to $15,000/mo)</option>
+              <option>AI Studio ($15,000 to $50,000/mo)</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="timeline">Timeline</label>
+            <select id="timeline" name="timeline">
+              <option value="" disabled selected>Select timeline</option>
+              <option>ASAP (within a week)</option>
+              <option>This month</option>
+              <option>Next 30 to 60 days</option>
+              <option>Flexible</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="context">Anything else I should know? <span style="font-weight:400;color:var(--text-3)">(optional)</span></label>
+          <textarea id="context" name="context" placeholder="Team size, prior work, specific constraints, anything else relevant..."></textarea>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn-primary">Send My Brief</button>
+        </div>
+        <p class="form-note">I respond to every inquiry within 48 hours.</p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Nav scroll effect
+    var nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 20) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Modal open/close
+    var overlay = document.getElementById('modal-overlay');
+    var modalPanel = document.getElementById('modal-panel');
+    var closeBtn = document.getElementById('modal-close');
+
+    var lastFocused = null;
+    var focusableSelectors = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    function trapFocus(e) {
+      var focusable = Array.from(modalPanel.querySelectorAll(focusableSelectors));
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
+    }
+
+    function openContactModal() {
+      lastFocused = document.activeElement;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function() {
+        modalPanel.classList.add('active');
+        var firstFocusable = modalPanel.querySelector(focusableSelectors);
+        if (firstFocusable) firstFocusable.focus();
+        modalPanel.addEventListener('keydown', trapFocus);
+      }, 10);
+    }
+
+    function closeContactModal() {
+      modalPanel.removeEventListener('keydown', trapFocus);
+      modalPanel.classList.remove('active');
+      setTimeout(function() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+        if (lastFocused) lastFocused.focus();
+      }, 300);
+    }
+
+    closeBtn.addEventListener('click', closeContactModal);
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeContactModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeContactModal();
+    });
+
+    // Contact form — AJAX submit via Formsubmit
+    var contactForm = document.getElementById('contact-form');
+    var formSuccess = document.getElementById('form-success');
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = contactForm.querySelector('button[type="submit"]');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      var data = new FormData(contactForm);
+      fetch('https://formsubmit.co/ajax/threejay20@live.ca', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: data
+      })
+      .then(function(res) { return res.json(); })
+      .then(function() {
+        contactForm.style.display = 'none';
+        formSuccess.classList.add('visible');
+      })
+      .catch(function() {
+        btn.textContent = 'Send My Brief';
+        btn.disabled = false;
+        alert('Something went wrong. Please try again or email directly.');
+      });
+    });
+
+    // Generate starfield
+    var starsContainer = document.getElementById('stars');
+    for (var i = 0; i < 80; i++) {
+      var star = document.createElement('div');
+      star.className = 'star';
+      var xPos = Math.random() * 100;
+      var yPos = Math.random() * 100;
+      var opacity = 0.3 + Math.random() * 0.3;
+      var duration = 20 + Math.random() * 40;
+      var delay = Math.random() * -40;
+      star.style.cssText = [
+        'left:' + xPos + '%',
+        'top:' + yPos + '%',
+        '--star-op:' + opacity,
+        'opacity:' + opacity,
+        'animation: star-drift ' + duration + 's ' + delay + 's linear infinite'
+      ].join(';');
+      starsContainer.appendChild(star);
+    }
+  </script>
+</body>
+</html>
