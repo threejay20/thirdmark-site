@@ -1874,11 +1874,10 @@
         <p>I'll review your brief and follow up within 48 hours with whether it's a fit and what the scope would look like.</p>
       </div>
 
-      <form class="contact-form" id="contact-form" action="https://formsubmit.co/justinjjohnson20@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="New Project Inquiry — thirdmark.co">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="text" name="_honey" style="display:none">
+      <form class="contact-form" id="contact-form" method="POST">
+        <input type="hidden" name="access_key" value="5e79fb3b-c191-4570-a2cf-db6a54840b00">
+        <input type="hidden" name="subject" value="New Project Inquiry — thirdmark.co">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
         <div class="form-row">
           <div class="form-group">
@@ -2024,14 +2023,14 @@
       btn.textContent = 'Sending...';
       btn.disabled = true;
       var data = new FormData(contactForm);
-      fetch('https://formsubmit.co/ajax/justinjjohnson20@gmail.com', {
+      fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
         body: data
       })
       .then(function(res) { return res.json(); })
       .then(function(result) {
-        if (result.success === 'true' || result.success === true) {
+        if (result.success === true) {
           contactForm.style.display = 'none';
           formSuccess.classList.add('visible');
         } else {
