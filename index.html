@@ -1875,10 +1875,9 @@
       </div>
 
       <form class="contact-form" id="contact-form" action="https://formsubmit.co/threejay20@live.ca" method="POST">
-        <input type="hidden" name="_subject" value="New Project Inquiry">
+        <input type="hidden" name="_subject" value="New Project Inquiry — thirdmark.co">
         <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="true">
-        <input type="hidden" name="_next" value="https://thirdmark.co/thank-you">
+        <input type="hidden" name="_captcha" value="false">
         <input type="text" name="_honey" style="display:none">
 
         <div class="form-row">
@@ -2031,14 +2030,20 @@
         body: data
       })
       .then(function(res) { return res.json(); })
-      .then(function() {
-        contactForm.style.display = 'none';
-        formSuccess.classList.add('visible');
+      .then(function(result) {
+        if (result.success === 'true' || result.success === true) {
+          contactForm.style.display = 'none';
+          formSuccess.classList.add('visible');
+        } else {
+          btn.textContent = 'Send My Brief';
+          btn.disabled = false;
+          alert('Something went wrong. Please try again or email justinjjohnson20@gmail.com directly.');
+        }
       })
       .catch(function() {
         btn.textContent = 'Send My Brief';
         btn.disabled = false;
-        alert('Something went wrong. Please try again or email directly.');
+        alert('Something went wrong. Please try again or email justinjjohnson20@gmail.com directly.');
       });
     });
 
