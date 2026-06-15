@@ -6,7 +6,7 @@
 
 ## Section 1: What You're Selling (Read This First)
 
-Thirdmark is an AI-native agency. That means one account lead, a real human strategist, handles intake, strategy, quality review, and delivery on every engagement. Behind that account lead is a system of 184 specialized AI agents, each built for a specific function: product strategy, engineering, marketing, design, sales, finance, operations. When a client needs a launch plan, a content calendar, a technical spec, or a pitch deck, those agents work in parallel. The account lead reviews everything, applies judgment, and delivers a finished product. The client gets senior-level output across every function, in days instead of months, at a fraction of what a traditional team costs.
+Thirdmark is an AI-native agency. That means one account lead, a real human strategist, handles intake, strategy, quality review, and delivery on every engagement. Behind that account lead is a system of 232 specialized AI agents, each built for a specific function: product strategy, engineering, marketing, design, sales, finance, operations. When a client needs a launch plan, a content calendar, a technical spec, or a pitch deck, those agents work in parallel. The account lead reviews everything, applies judgment, and delivers a finished product. The client gets senior-level output across every function, in days instead of months, at a fraction of what a traditional team costs.
 
 What makes this different from everything else you have probably sold before is that there is no handoff chain. There is no junior team working through a project manager working through a strategist working through a creative director. There is one person the client talks to, and behind that person is a production system that runs at a pace no human team can match. You are not selling a retainer with vague deliverables. You are selling a specific output, delivered in a specific timeframe, at a price point that makes the comparison to any alternative look obvious. The conversation is not about convincing someone that AI is useful. It is about showing someone that the output is already good and the economics already work.
 
@@ -14,10 +14,10 @@ What makes this different from everything else you have probably sold before is 
 
 ## Section 2: The One-Paragraph Pitch
 
-Thirdmark is an agency that runs on a system of 184 specialized AI agents, each one purpose-built for a different business function, all orchestrated by a human account lead who handles strategy and quality on every engagement. When a company works with us, they get a marketing strategy, a content calendar, a technical architecture doc, a pitch deck, and whatever else they actually need, delivered in days rather than weeks, at half the cost of hiring even one full-time specialist. We do not have junior teams or long onboarding timelines. You tell us what you need, we scope it clearly, and we deliver it fast. For a founder or a small team trying to move quickly, it is effectively like having a full-service agency on call, without the retainer overhead or the wait.
+Thirdmark is an agency that runs on a system of 232 specialized AI agents, each one purpose-built for a different business function, all orchestrated by a human account lead who handles strategy and quality on every engagement. When a company works with us, they get a marketing strategy, a content calendar, a technical architecture doc, a pitch deck, and whatever else they actually need, delivered in days rather than weeks, at half the cost of hiring even one full-time specialist. We do not have junior teams or long onboarding timelines. You tell us what you need, we scope it clearly, and we deliver it fast. For a founder or a small team trying to move quickly, it is effectively like having a full-service agency on call, without the retainer overhead or the wait.
 
 **20-second version (for networking events):**
-Thirdmark is an AI-native agency that delivers senior-level output across every business function, from marketing to engineering to product strategy, in days, at 50 to 65 percent below what a traditional team costs. One account lead, 184 specialized agents, real deliverables.
+Thirdmark is an AI-native agency that delivers senior-level output across every business function, from marketing to engineering to product strategy, in days, at 50 to 65 percent below what a traditional team costs. One account lead, 232 specialized agents, real deliverables.
 
 ---
 
@@ -111,7 +111,7 @@ If they had a bad agency or hiring experience, do not rush past it. Let them tel
 ### Slide 4: How Thirdmark Works
 
 **What to say:**
-"Thirdmark solves this with a different architecture. One account lead handles strategy, intake, and quality review. Behind that account lead is a system of 184 specialized AI agents, each one purpose-built for a specific function. When you need a content calendar and a homepage rewrite and a technical architecture doc at the same time, those workstreams run in parallel. The account lead reviews everything before it reaches you. You get the output, not the process."
+"Thirdmark solves this with a different architecture. One account lead handles strategy, intake, and quality review. Behind that account lead is a system of 232 specialized AI agents, each one purpose-built for a specific function. When you need a content calendar and a homepage rewrite and a technical architecture doc at the same time, those workstreams run in parallel. The account lead reviews everything before it reaches you. You get the output, not the process."
 
 **Question to ask:**
 "Does that model make sense? Do you have any questions about how the account lead and the agent system actually work together?"

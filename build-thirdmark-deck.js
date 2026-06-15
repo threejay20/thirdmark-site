@@ -204,7 +204,7 @@ async function buildDeck() {
     s.background = { color: BG };
 
     sectionLabel(s, "THE SOLUTION");
-    headline(s, "One account lead. 184 specialized AI agents.\nEvery function covered.", 0.72, 22, CONTENT_W);
+    headline(s, "One account lead. 232 specialized AI agents.\nEvery function covered.", 0.72, 22, CONTENT_W);
 
     // Diagram center
     const diagCenterX = SW / 2;
@@ -258,7 +258,7 @@ async function buildDeck() {
       fill: { color: SURFACE },
       line: { color: ACCENT, width: 1.5 },
     });
-    s.addText("184 SPECIALIZED AI AGENTS", {
+    s.addText("232 SPECIALIZED AI AGENTS", {
       x: botBoxX, y: botBoxY + 0.06, w: botBoxW, h: 0.36,
       fontSize: 14, bold: true, color: WHITE,
       fontFace: "Calibri", align: "center", charSpacing: 1, margin: 0,
@@ -272,8 +272,8 @@ async function buildDeck() {
     // Stat pills row
     const pills = [
       "3 to 7 day delivery",
-      "14 delivery divisions",
-      "184 agents",
+      "16 delivery divisions",
+      "232 agents",
       "Single point of contact",
     ];
     const pillY   = botBoxY + botBoxH + 0.34;
